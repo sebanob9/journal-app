@@ -50,6 +50,16 @@ export const startGoogleLogin = () => {
 } // una vez que se consigue la respuesta, se hace el dispatch de la acción definida
 
 
+export const startLogout = () => { // es asincrono porque el logout se hace en firebase
+    return async ( dispatch ) => {
+        await firebase.auth().signOut();
+
+        dispatch( logout() ) // llamo al logout de debaje, que a su vez apunta al authreducer, devolviendo un objeto vacío    
+    }
+}
+
+
+
 // accion que se llama cuando tenga el uid y el displayName // ESTA ES LA ACCION
 export const login = (uid, displayName) => ({
     type: types.login,
@@ -58,14 +68,6 @@ export const login = (uid, displayName) => ({
         displayName
     }
 })
-
-export const startLogout = () => { // es asincrono porque el logout se hace en firebase
-    return async ( dispatch ) => {
-        await firebase.auth().signOut();
-
-        dispatch( logout() ) // llamo al logout de debaje, que a su vez apunta al authreducer, devolviendo un objeto vacío    
-    }
-}
 
 export const logout = () => ({
     type: types.logout,

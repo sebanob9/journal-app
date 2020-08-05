@@ -15,17 +15,17 @@ export const AppRouter = () => {
 
     const [checking, setChecking] = useState(true); // si está en checking, no se muestra nada de la app, hasta comprobar que el usuario esta autenticado 
     const [isLoggedIn, setIsLoggedIn] = useState(false)// al entrar siempre en falso
-
+    console.log('isLoggedIn: ',isLoggedIn)
     useEffect(() => {
         firebase.auth().onAuthStateChanged( (user) => {
-            if( user?.uid) { // cuando se detecta el cambio en auth, hay que hacer el dispatch del login
+            if( user?.uid) { // cuando se detecta el cambio en auth, hay que hacer el dispatch del login. si no existe uid es null y por tanto vamos al else
                 dispatch(login(user.uid, user.displayName ));
                 setIsLoggedIn(true);
+                
             } else {
                 setIsLoggedIn(false);
             }
             setChecking(false);
-           
         });
     }, [dispatch, setChecking, setIsLoggedIn])
 
